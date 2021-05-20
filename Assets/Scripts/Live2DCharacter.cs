@@ -34,6 +34,7 @@ public class Live2DCharacter : MonoBehaviour
 
         AddAction(new ActionBlink(Parameters["ParamEyeLOpen"], Parameters["ParamEyeROpen"]));
         AddAction(new ActionBreath(Parameters["ParamBreath"]));
+        AddAction(new ActionLipSync(gameObject.AddComponent<AudioSource>(), Parameters["ParamMouthOpenY"]));
     }
 
     void LateUpdate()
