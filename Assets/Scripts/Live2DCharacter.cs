@@ -36,13 +36,12 @@ public class Live2DCharacter : MonoBehaviour
         AddAction(new ActionBreath(Parameters["ParamBreath"]));
     }
 
-    void Update()
+    void LateUpdate()
     {
         foreach (var Act in Actions)
         {
             Act.Update();
         }
-        Model.ForceUpdateNow();
     }
 
     /// <summary>
