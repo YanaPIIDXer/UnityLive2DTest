@@ -16,7 +16,28 @@ public class Live2DCharacter : MonoBehaviour
     /// </summary>
     private Dictionary<string, CubismParameter> Parameters = new Dictionary<string, CubismParameter>();
 
+    /// <summary>
+    /// アクションリスト
+    /// </summary>
+    private List<CharacterAction> Actions = new List<CharacterAction>();
+
     void Awake()
+    {
+        CollectParameters();
+    }
+
+    void Update()
+    {
+        foreach (var Act in Actions)
+        {
+            Act.Update();
+        }
+    }
+
+    /// <summary>
+    /// パラメータ収集
+    /// </summary>
+    private void CollectParameters()
     {
         var RootTrans = transform.Find("Parameters");
         for (var i = 0; i < RootTrans.childCount; i++)
@@ -24,9 +45,5 @@ public class Live2DCharacter : MonoBehaviour
             var Obj = RootTrans.GetChild(i).gameObject;
             Parameters.Add(Obj.name, Obj.GetComponent<CubismParameter>());
         }
-
-        // ウインク
-        Parameters["ParamEyeLOpen"].Value = 1.0f;
-        Parameters["ParamEyeROpen"].Value = 0.0f;
     }
 }
