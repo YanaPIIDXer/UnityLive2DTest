@@ -12,21 +12,21 @@ using UniRx.Operators;
 public class Live2DCharacter : MonoBehaviour
 {
     /// <summary>
-    /// 左目の開き具合
+    /// パラメータ名とオブジェクトのDictionary
     /// </summary>
-    [SerializeField]
-    private CubismParameter LeftEyeOpen = null;
-
-    /// <summary>
-    /// 右目の開き具合
-    /// </summary>
-    [SerializeField]
-    private CubismParameter RightEyeOpen = null;
+    private Dictionary<string, CubismParameter> Parameters = new Dictionary<string, CubismParameter>();
 
     void Awake()
     {
-        // これでウインクになるはず
-        LeftEyeOpen.Value = 0.0f;
-        RightEyeOpen.Value = 1.0f;
+        var RootTrans = transform.Find("Parameters");
+        for (var i = 0; i < RootTrans.childCount; i++)
+        {
+            var Obj = RootTrans.GetChild(i).gameObject;
+            Parameters.Add(Obj.name, Obj.GetComponent<CubismParameter>());
+        }
+
+        // ウインク
+        Parameters["ParamEyeLOpen"].Value = 1.0f;
+        Parameters["ParamEyeROpen"].Value = 0.0f;
     }
 }
