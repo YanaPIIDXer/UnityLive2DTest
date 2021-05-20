@@ -21,9 +21,18 @@ public class Live2DCharacter : MonoBehaviour
     /// </summary>
     private List<CharacterAction> Actions = new List<CharacterAction>();
 
+    /// <summary>
+    /// Model
+    /// </summary>
+    private CubismModel Model = null;
+
     void Awake()
     {
+        Model = GetComponent<CubismModel>();
+
         CollectParameters();
+
+        AddAction(new ActionBlink(Parameters["ParamEyeLOpen"], Parameters["ParamEyeROpen"]));
     }
 
     void Update()
@@ -32,6 +41,16 @@ public class Live2DCharacter : MonoBehaviour
         {
             Act.Update();
         }
+        Model.ForceUpdateNow();
+    }
+
+    /// <summary>
+    /// アクション追加
+    /// </summary>
+    /// <param name="Act">アクション</param>
+    private void AddAction(CharacterAction Act)
+    {
+        Actions.Add(Act);
     }
 
     /// <summary>
