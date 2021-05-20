@@ -33,6 +33,7 @@ public class Live2DCharacter : MonoBehaviour
         CollectParameters();
 
         AddAction(new ActionBlink(Parameters["ParamEyeLOpen"], Parameters["ParamEyeROpen"]));
+        AddAction(new ActionBreath(Parameters["ParamBreath"]));
     }
 
     void Update()
