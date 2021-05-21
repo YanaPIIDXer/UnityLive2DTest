@@ -5,8 +5,15 @@ using UniRx;
 using System;
 
 /// <summary>
+/// キー入力インタフェース
+/// </summary>
+public interface IKeyInput
+{
+}
+
+/// <summary>
 /// キー入力
 /// </summary>
-public class KeyInput : MonoBehaviour
+public class KeyInput : MonoBehaviour, IKeyInput
 {
 }
