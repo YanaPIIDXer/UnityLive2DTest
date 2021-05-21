@@ -18,6 +18,11 @@ public class Live2DCharacter : MonoBehaviour
     private Dictionary<string, CubismParameter> Parameters = new Dictionary<string, CubismParameter>();
 
     /// <summary>
+    /// 各パーツのTransform
+    /// </summary>
+    private Dictionary<string, Transform> Transforms = new Dictionary<string, Transform>();
+
+    /// <summary>
     /// アクションリスト
     /// </summary>
     private List<CharacterAction> Actions = new List<CharacterAction>();
@@ -36,8 +41,9 @@ public class Live2DCharacter : MonoBehaviour
     void Awake()
     {
         Model = GetComponent<CubismModel>();
-
         CollectParameters();
+        CollectTransforms();
+
         var Blink = new ActionBlink(Parameters["ParamEyeLOpen"], Parameters["ParamEyeROpen"]);
         var Breath = new ActionBreath(Parameters["ParamBreath"]);
         var LipSync = new ActionLipSync(gameObject.AddComponent<AudioSource>(), Parameters["ParamMouthOpenY"]);
@@ -63,13 +69,21 @@ public class Live2DCharacter : MonoBehaviour
         var Wink = new ActionWink(Parameters["ParamEyeLOpen"]);
         Wink.OnComplete
             .Subscribe((_) => Blink.IsActive = true);
-
         InputEvents.Wink
             .Subscribe((_) =>
             {
                 Blink.IsActive = false;
                 Wink.IsActive = true;
             });
+
+        List<Transform> Transes = new List<Transform>();
+        foreach (var Tr in Transforms.Values)
+        {
+            Transes.Add(Tr);
+        }
+        var Getdown = new ActionPromise(Transes);
+        InputEvents.Promise
+            .Subscribe((_) => Getdown.IsActive = !Getdown.IsActive);
 
         AddAction(Blink);
         AddAction(Breath);
@@ -78,6 +92,7 @@ public class Live2DCharacter : MonoBehaviour
         AddAction(LeftHair);
         AddAction(RightHair);
         AddAction(Wink);
+        AddAction(Getdown);
     }
 
     void LateUpdate()
@@ -109,6 +124,20 @@ public class Live2DCharacter : MonoBehaviour
             var Param = Obj.GetComponent<CubismParameter>();
             Param.Value = Param.DefaultValue;       // おまじない。これがないとたまにネクタイ揺れが起きなくなる・・・？
             Parameters.Add(Obj.name, Param);
+        }
+    }
+
+    /// <summary>
+    /// Transform収集
+    /// </summary>
+    private void CollectTransforms()
+    {
+        var RootTransform = transform.Find("Drawables");
+        Transforms.Add("Root", RootTransform);
+        for (var i = 0; i < RootTransform.childCount; i++)
+        {
+            var Trans = RootTransform.GetChild(i);
+            Transforms.Add(Trans.gameObject.name, Trans);
         }
     }
 }

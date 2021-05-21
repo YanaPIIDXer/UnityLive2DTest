@@ -14,6 +14,11 @@ public interface IKeyInput
     /// ウインク
     /// </summary>
     IObservable<Unit> Wink { get; }
+
+    /// <summary>
+    /// ゲッダン☆
+    /// </summary>
+    IObservable<Unit> Promise { get; }
 }
 
 /// <summary>
@@ -25,6 +30,13 @@ public class KeyInput : MonoBehaviour, IKeyInput
     /// ウインク
     /// </summary>
     public IObservable<Unit> Wink => Observable.EveryUpdate()
-                                        .Where((_) => Input.GetKey(KeyCode.W))
+                                        .Where((_) => Input.GetKeyDown(KeyCode.W))
                                         .Select((_) => Unit.Default);
+
+    /// <summary>
+    /// ゲッダン☆
+    /// </summary>
+    public IObservable<Unit> Promise => Observable.EveryUpdate()
+                                            .Where((_) => Input.GetKeyDown(KeyCode.G))
+                                            .Select((_) => Unit.Default);
 }
