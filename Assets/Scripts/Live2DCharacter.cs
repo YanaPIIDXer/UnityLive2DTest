@@ -32,9 +32,9 @@ public class Live2DCharacter : MonoBehaviour
 
         CollectParameters();
 
-        AddAction(new ActionBlink(Parameters["ParamEyeLOpen"], Parameters["ParamEyeROpen"]));
-        AddAction(new ActionBreath(Parameters["ParamBreath"]));
-        AddAction(new ActionLipSync(gameObject.AddComponent<AudioSource>(), Parameters["ParamMouthOpenY"]));
+        var Blink = new ActionBlink(Parameters["ParamEyeLOpen"], Parameters["ParamEyeROpen"]);
+        var Breath = new ActionBreath(Parameters["ParamBreath"]);
+        var LipSync = new ActionLipSync(gameObject.AddComponent<AudioSource>(), Parameters["ParamMouthOpenY"]);
 
         var TieParams = new ParameterList();
         for (int i = 1; i <= 7; i++)
@@ -42,7 +42,7 @@ public class Live2DCharacter : MonoBehaviour
             string Name = string.Format("Param_Angle_Rotation_{0}_D_BODY_06", i);
             TieParams.Add(Parameters[Name]);
         }
-        AddAction(new ActionPhysics(TieParams, 5.0f, 0.3f));
+        var Ties = new ActionPhysics(TieParams, 5.0f, 0.3f);
 
         var LeftHairParams = new ParameterList();
         var RightHairParams = new ParameterList();
@@ -51,8 +51,15 @@ public class Live2DCharacter : MonoBehaviour
             LeftHairParams.Add(Parameters[string.Format("Param_Angle_Rotation_{0}_D_HAIR_BACK_00", i)]);
             RightHairParams.Add(Parameters[string.Format("Param_Angle_Rotation_{0}_D_HAIR_BACK_10", i)]);
         }
-        AddAction(new ActionPhysics(LeftHairParams, 7.0f, 0.2f));
-        AddAction(new ActionPhysics(RightHairParams, 7.0f, 0.2f));
+        var LeftHair = new ActionPhysics(LeftHairParams, 7.0f, 0.2f);
+        var RightHair = new ActionPhysics(RightHairParams, 7.0f, 0.2f);
+
+        AddAction(Blink);
+        AddAction(Breath);
+        AddAction(LipSync);
+        AddAction(Ties);
+        AddAction(LeftHair);
+        AddAction(RightHair);
     }
 
     void LateUpdate()
