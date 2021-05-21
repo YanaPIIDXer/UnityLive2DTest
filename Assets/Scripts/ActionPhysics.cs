@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ネクタイ揺れ
+/// 物理揺れ
 /// </summary>
-public class ActionShakeTie : CharacterAction
+public class ActionPhysics : CharacterAction
 {
     /// <summary>
     /// パラメータリスト
@@ -13,9 +13,14 @@ public class ActionShakeTie : CharacterAction
     private ParameterList ParamList = new ParameterList();
 
     /// <summary>
-    /// パラメータの取り得る範囲の絶対値
+    /// 強さ
     /// </summary>
-    private static readonly float ParameterRangeAbs = 15.0f;
+    private float Power = 0.0f;
+
+    /// <summary>
+    /// ジョイント間に発生する強さ
+    /// </summary>
+    private float JointPower = 0.0f;
 
     /// <summary>
     /// 経過時間
@@ -26,9 +31,13 @@ public class ActionShakeTie : CharacterAction
     /// コンストラクタ
     /// </summary>
     /// <param name="ParamList">パラメータリスト</param>
-    public ActionShakeTie(ParameterList ParamList)
+    /// <param name="Power">強さ</param>
+    /// <param name="JointPower">ジョイント間に発生する強さ</param>
+    public ActionPhysics(ParameterList ParamList, float Power, float JointPower = 0.0f)
     {
         this.ParamList = ParamList;
+        this.Power = Power;
+        this.JointPower = JointPower;
     }
 
     /// <summary>
@@ -37,7 +46,7 @@ public class ActionShakeTie : CharacterAction
     protected override void OnUpdate()
     {
         ElapsedTime += Time.deltaTime;
-        float Value = Mathf.Sin(ElapsedTime) * ParameterRangeAbs;
-        ParamList.SetValue(Value, 0.3f);
+        float Value = Mathf.Sin(ElapsedTime) * Power;
+        ParamList.SetValue(Value, JointPower);
     }
 }

@@ -42,7 +42,7 @@ public class Live2DCharacter : MonoBehaviour
             string Name = string.Format("Param_Angle_Rotation_{0}_D_BODY_06", i);
             TieParams.Add(Parameters[Name]);
         }
-        AddAction(new ActionShakeTie(TieParams));
+        AddAction(new ActionPhysics(TieParams, 5.0f, 0.3f));
     }
 
     void LateUpdate()
