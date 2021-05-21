@@ -16,6 +16,11 @@ public class ActionSmile : CharacterAction
     private CubismParameter HeadZParam = null;
 
     /// <summary>
+    /// 体のＺ軸パラメータ
+    /// </summary>
+    private CubismParameter BodyZParam = null;
+
+    /// <summary>
     /// 目の開き具合のパラメータ群
     /// </summary>
     private List<CubismParameter> EyesParams = null;
@@ -49,12 +54,14 @@ public class ActionSmile : CharacterAction
     /// コンストラクタ
     /// </summary>
     /// <param name="HeadZParam">頭のＺ軸のパラメータ</param>
+    /// <param name="BodyZParam">体のＺ軸のパラメータ</param>
     /// <param name="EyesParams">目の開き具合のパラメータ</param>
     /// <param name="PositiveParams">プラス方向に更新するパラメータ群</param>
     /// <param name="NegativeParams">マイナス方向に更新するパラメータ群</param>
-    public ActionSmile(CubismParameter HeadZParam, List<CubismParameter> EyesParams, List<CubismParameter> PositiveParams, List<CubismParameter> NegativeParams)
+    public ActionSmile(CubismParameter HeadZParam, CubismParameter BodyZParam, List<CubismParameter> EyesParams, List<CubismParameter> PositiveParams, List<CubismParameter> NegativeParams)
     {
         this.HeadZParam = HeadZParam;
+        this.BodyZParam = BodyZParam;
         this.EyesParams = EyesParams;
         this.PositiveParams = PositiveParams;
         this.NegativeParams = NegativeParams;
@@ -131,5 +138,6 @@ public class ActionSmile : CharacterAction
             Param.Value = 1.0f - Value;
         }
         HeadZParam.Value = Value * 30.0f;
+        BodyZParam.Value = Value * 10.0f;
     }
 }

@@ -99,7 +99,7 @@ public class Live2DCharacter : MonoBehaviour
         List<CubismParameter> NegativeParams = new List<CubismParameter>();
         NegativeParams.Add(Parameters["ParamBrowLY"]);
         NegativeParams.Add(Parameters["ParamBrowRY"]);
-        var Smile = new ActionSmile(Parameters["ParamAngleZ"], EyesParams, PositiveParams, NegativeParams);
+        var Smile = new ActionSmile(Parameters["ParamAngleZ"], Parameters["ParamBodyAngleZ"], EyesParams, PositiveParams, NegativeParams);
         InputEvents.Smile
             .Subscribe((_) =>
             {
