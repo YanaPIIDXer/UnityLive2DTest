@@ -65,6 +65,17 @@ public class Live2DCharacter : MonoBehaviour
         var LeftHair = new ActionPhysics(LeftHairParams, 7.0f, 0.2f);
         var RightHair = new ActionPhysics(RightHairParams, 7.0f, 0.2f);
 
+        var FrontHairParams = new ParameterList();
+        FrontHairParams.Add(Parameters["ParamHairFront"]);
+        FrontHairParams.Add(Parameters["ParamHairFront2"]);
+        var FrontHair = new ActionPhysics(FrontHairParams, 0.3f, 0.1f);
+
+        var BackHairParams = new ParameterList();
+        BackHairParams.Add(Parameters["ParamHairBack"]);
+        BackHairParams.Add(Parameters["ParamHairBackL8"]);
+        BackHairParams.Add(Parameters["ParamHairBackR6"]);
+        var BackHair = new ActionPhysics(BackHairParams, 0.3f, 0.1f);
+
         var Wink = new ActionWink(Parameters["ParamEyeLOpen"]);
         Wink.OnComplete
             .Subscribe((_) => Blink.IsActive = true)
@@ -117,6 +128,8 @@ public class Live2DCharacter : MonoBehaviour
         AddAction(Ties);
         AddAction(LeftHair);
         AddAction(RightHair);
+        AddAction(FrontHair);
+        AddAction(BackHair);
         AddAction(Wink);
         AddAction(Getdown);
         AddAction(Smile);
