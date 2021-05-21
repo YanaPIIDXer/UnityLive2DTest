@@ -60,9 +60,15 @@ public class Live2DCharacter : MonoBehaviour
         var LeftHair = new ActionPhysics(LeftHairParams, 7.0f, 0.2f);
         var RightHair = new ActionPhysics(RightHairParams, 7.0f, 0.2f);
 
+        var Wink = new ActionWink(Parameters["ParamEyeLOpen"]);
+        Wink.OnComplete
+            .Subscribe((_) => Blink.IsActive = true);
+
         InputEvents.Wink
             .Subscribe((_) =>
             {
+                Blink.IsActive = false;
+                Wink.IsActive = true;
             });
 
         AddAction(Blink);
@@ -71,6 +77,7 @@ public class Live2DCharacter : MonoBehaviour
         AddAction(Ties);
         AddAction(LeftHair);
         AddAction(RightHair);
+        AddAction(Wink);
     }
 
     void LateUpdate()

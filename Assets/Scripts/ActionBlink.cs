@@ -35,6 +35,10 @@ public class ActionBlink : CharacterAction
     /// 経過時間
     /// </summary>
     private float ElapsedTime = 0.0f;
+    /// <summary>
+    /// インターバルキャンセルオブジェクト
+    /// </summary>
+    private IDisposable IntervalCancel = null;
 
     /// <summary>
     /// コンストラクタ
@@ -47,6 +51,23 @@ public class ActionBlink : CharacterAction
         this.RightEyeParam = RightEyeParam;
 
         WaitInterval();
+    }
+
+    /// <summary>
+    /// アクティブフラグが切り替わった
+    /// </summary>
+    protected override void OnActiveFlagChanged()
+    {
+        if (!IsActive)
+        {
+            LeftEyeParam.Value = 1.0f;
+            RightEyeParam.Value = 1.0f;
+            if (IntervalCancel != null)
+            {
+                IntervalCancel.Dispose();
+                IntervalCancel = null;
+            }
+        }
     }
 
     /// <summary>
@@ -75,7 +96,7 @@ public class ActionBlink : CharacterAction
     /// </summary>
     private void WaitInterval()
     {
-        Observable.Timer(TimeSpan.FromSeconds(UnityEngine.Random.Range(0.1f, 5.0f)))
+        IntervalCancel = Observable.Timer(TimeSpan.FromSeconds(UnityEngine.Random.Range(0.1f, 5.0f)))
             .SkipWhile((_) => bIsBlinking)
             .Subscribe((_) =>
             {
