@@ -32,7 +32,8 @@ public class ActionPromise : CharacterAction
         {
             foreach (var Tr in Transforms)
             {
-                Tr.localEulerAngles = Vector3.zero;
+                Tr.position = Vector3.zero;
+                Tr.eulerAngles = Vector3.zero;
             }
         }
     }
@@ -44,6 +45,7 @@ public class ActionPromise : CharacterAction
     {
         foreach (var Tr in Transforms)
         {
+            Tr.position = new Vector3(0.0f, 0.3f, 0.0f);
             Tr.eulerAngles = new Vector3(UnityEngine.Random.Range(0.0f, 360.0f), 0.0f, UnityEngine.Random.Range(0.0f, 360.0f));
         }
     }
