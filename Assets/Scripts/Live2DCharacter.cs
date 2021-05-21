@@ -5,6 +5,7 @@ using Live2D.Cubism.Core;
 using UniRx;
 using System;
 using UniRx.Operators;
+using Zenject;
 
 /// <summary>
 /// Live2Dのキャラクタ
@@ -26,12 +27,17 @@ public class Live2DCharacter : MonoBehaviour
     /// </summary>
     private CubismModel Model = null;
 
+    /// <summary>
+    /// キー入力
+    /// </summary>
+    [Inject]
+    private IKeyInput InputEvents = null;
+
     void Awake()
     {
         Model = GetComponent<CubismModel>();
 
         CollectParameters();
-
         var Blink = new ActionBlink(Parameters["ParamEyeLOpen"], Parameters["ParamEyeROpen"]);
         var Breath = new ActionBreath(Parameters["ParamBreath"]);
         var LipSync = new ActionLipSync(gameObject.AddComponent<AudioSource>(), Parameters["ParamMouthOpenY"]);
@@ -53,6 +59,11 @@ public class Live2DCharacter : MonoBehaviour
         }
         var LeftHair = new ActionPhysics(LeftHairParams, 7.0f, 0.2f);
         var RightHair = new ActionPhysics(RightHairParams, 7.0f, 0.2f);
+
+        InputEvents.Wink
+            .Subscribe((_) =>
+            {
+            });
 
         AddAction(Blink);
         AddAction(Breath);
