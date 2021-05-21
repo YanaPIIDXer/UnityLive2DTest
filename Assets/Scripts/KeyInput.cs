@@ -19,6 +19,12 @@ public interface IKeyInput
     /// ゲッダン☆
     /// </summary>
     IObservable<Unit> Promise { get; }
+
+    /// <summary>
+    /// 笑顔
+    /// </summary>
+    /// <value></value>
+    IObservable<Unit> Smile { get; }
 }
 
 /// <summary>
@@ -39,4 +45,11 @@ public class KeyInput : MonoBehaviour, IKeyInput
     public IObservable<Unit> Promise => Observable.EveryUpdate()
                                             .Where((_) => Input.GetKeyDown(KeyCode.G))
                                             .Select((_) => Unit.Default);
+
+    /// <summary>
+    /// 笑顔
+    /// </summary>
+    public IObservable<Unit> Smile => Observable.EveryUpdate()
+                                        .Where((_) => Input.GetKeyDown(KeyCode.S))
+                                        .Select((_) => Unit.Default);
 }

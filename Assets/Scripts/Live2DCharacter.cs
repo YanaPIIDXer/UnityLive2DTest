@@ -87,6 +87,30 @@ public class Live2DCharacter : MonoBehaviour
             .Subscribe((_) => Getdown.IsActive = !Getdown.IsActive)
             .AddTo(gameObject);
 
+        List<CubismParameter> EyesParams = new List<CubismParameter>();
+        EyesParams.Add(Parameters["ParamEyeLOpen"]);
+        EyesParams.Add(Parameters["ParamEyeROpen"]);
+        List<CubismParameter> PositiveParams = new List<CubismParameter>();
+        PositiveParams.Add(Parameters["ParamEyeLSmile"]);
+        PositiveParams.Add(Parameters["ParamEyeRSmile"]);
+        PositiveParams.Add(Parameters["ParamMouthOpenY"]);
+        PositiveParams.Add(Parameters["ParamMouthForm"]);
+        PositiveParams.Add(Parameters["ParamEyeLSmile"]);
+        List<CubismParameter> NegativeParams = new List<CubismParameter>();
+        NegativeParams.Add(Parameters["ParamBrowLY"]);
+        NegativeParams.Add(Parameters["ParamBrowRY"]);
+        var Smile = new ActionSmile(Parameters["ParamAngleZ"], EyesParams, PositiveParams, NegativeParams);
+        InputEvents.Smile
+            .Subscribe((_) =>
+            {
+                Smile.IsActive = true;
+                Blink.IsActive = false;
+            })
+            .AddTo(gameObject);
+        Smile.OnComplete
+            .Subscribe((_) => Blink.IsActive = true)
+            .AddTo(gameObject);
+
         AddAction(Blink);
         AddAction(Breath);
         AddAction(LipSync);
@@ -95,6 +119,7 @@ public class Live2DCharacter : MonoBehaviour
         AddAction(RightHair);
         AddAction(Wink);
         AddAction(Getdown);
+        AddAction(Smile);
     }
 
     void LateUpdate()
