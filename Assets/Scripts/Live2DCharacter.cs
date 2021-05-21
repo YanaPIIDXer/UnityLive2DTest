@@ -124,7 +124,6 @@ public class Live2DCharacter : MonoBehaviour
         {
             var Obj = RootTrans.GetChild(i).gameObject;
             var Param = Obj.GetComponent<CubismParameter>();
-            Param.Value = Param.DefaultValue;       // おまじない。これがないとたまにネクタイ揺れが起きなくなる・・・？
             Parameters.Add(Obj.name, Param);
         }
     }
