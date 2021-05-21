@@ -35,6 +35,14 @@ public class Live2DCharacter : MonoBehaviour
         AddAction(new ActionBlink(Parameters["ParamEyeLOpen"], Parameters["ParamEyeROpen"]));
         AddAction(new ActionBreath(Parameters["ParamBreath"]));
         AddAction(new ActionLipSync(gameObject.AddComponent<AudioSource>(), Parameters["ParamMouthOpenY"]));
+
+        var TieParams = new ParameterList();
+        for (int i = 1; i <= 7; i++)
+        {
+            string Name = string.Format("Param_Angle_Rotation_{0}_D_BODY_06", i);
+            TieParams.Add(Parameters[Name]);
+        }
+        AddAction(new ActionShakeTie(TieParams));
     }
 
     void LateUpdate()
