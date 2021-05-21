@@ -32,7 +32,7 @@ public class ActionLipSync : CharacterAction
     /// <summary>
     /// 強さ
     /// </summary>
-    private static float Power = 20.0f;
+    private static float Power = 40.0f;
 
     /// <summary>
     /// 閾値
