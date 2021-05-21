@@ -33,12 +33,11 @@ public class Live2DCharacter : MonoBehaviour
     private CubismModel Model = null;
 
     /// <summary>
-    /// キー入力
+    /// セットアップ
     /// </summary>
+    /// <param name="InputEvents">入力イベントインタフェース</param>
     [Inject]
-    private IKeyInput InputEvents = null;
-
-    void Awake()
+    private void Setup(IKeyInput InputEvents)
     {
         Model = GetComponent<CubismModel>();
         CollectParameters();
