@@ -68,13 +68,15 @@ public class Live2DCharacter : MonoBehaviour
 
         var Wink = new ActionWink(Parameters["ParamEyeLOpen"]);
         Wink.OnComplete
-            .Subscribe((_) => Blink.IsActive = true);
+            .Subscribe((_) => Blink.IsActive = true)
+            .AddTo(gameObject);
         InputEvents.Wink
             .Subscribe((_) =>
             {
                 Blink.IsActive = false;
                 Wink.IsActive = true;
-            });
+            })
+            .AddTo(gameObject);
 
         List<Transform> Transes = new List<Transform>();
         foreach (var Tr in Transforms.Values)
@@ -83,7 +85,8 @@ public class Live2DCharacter : MonoBehaviour
         }
         var Getdown = new ActionPromise(Transes);
         InputEvents.Promise
-            .Subscribe((_) => Getdown.IsActive = !Getdown.IsActive);
+            .Subscribe((_) => Getdown.IsActive = !Getdown.IsActive)
+            .AddTo(gameObject);
 
         AddAction(Blink);
         AddAction(Breath);
