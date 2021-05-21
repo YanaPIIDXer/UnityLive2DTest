@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using System;
 
 /// <summary>
 /// キャラクタのアクション基底クラス
@@ -45,4 +47,14 @@ public abstract class CharacterAction
     /// アクティブフラグが変更された
     /// </summary>
     protected virtual void OnActiveFlagChanged() { }
+
+    /// <summary>
+    /// アクションが終了した時のSubject
+    /// </summary>
+    protected Subject<Unit> OnCompleteSubject { get; private set; } = new Subject<Unit>();
+
+    /// <summary>
+    /// アクションが終了した
+    /// </summary>
+    public IObservable<Unit> OnComplete { get { return OnCompleteSubject; } }
 }
