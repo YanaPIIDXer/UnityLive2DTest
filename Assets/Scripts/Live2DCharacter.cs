@@ -130,7 +130,7 @@ public class Live2DCharacter : MonoBehaviour
 
         var OddEye = new ActionOddEye(Transforms["D_EYE_BALL_01"].GetComponent<MeshRenderer>().material);
         InputEvents.OddEye
-            .Subscribe((_) => OddEye.IsActive = !OddEye.IsActive)
+            .Subscribe((_) => OddEye.Toggle())
             .AddTo(gameObject);
 
         AddAction(Blink);
