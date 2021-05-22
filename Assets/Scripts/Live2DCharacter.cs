@@ -184,7 +184,7 @@ public class Live2DCharacter : MonoBehaviour
             var Trans = RootTransform.GetChild(i);
             Transforms.Add(Trans.gameObject.name, Trans);
 
-            Trans.GetComponent<MeshRenderer>().material = CustomMaterial;
+            Trans.GetComponent<MeshRenderer>().material = new Material(CustomMaterial);
         }
     }
 }
