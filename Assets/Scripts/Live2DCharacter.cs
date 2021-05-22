@@ -184,7 +184,12 @@ public class Live2DCharacter : MonoBehaviour
             var Trans = RootTransform.GetChild(i);
             Transforms.Add(Trans.gameObject.name, Trans);
 
-            Trans.GetComponent<MeshRenderer>().material = new Material(CustomMaterial);
+            var Mat = new Material(CustomMaterial);
+            Trans.GetComponent<MeshRenderer>().material = Mat;
+            // HACK:ここでは_MainTexがまだ取れないらしい
+            //      仕方ないので2048*2048決め打ち（どの道このソースもミクのAssetありきだし）
+            Mat.SetFloat("_TexelX", 1.0f / 2048);
+            Mat.SetFloat("_TexelY", 1.0f / 2048);
         }
     }
 }

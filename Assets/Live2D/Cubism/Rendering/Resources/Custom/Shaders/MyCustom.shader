@@ -17,6 +17,9 @@
         [PerRendererData] cubism_MaskTexture("cubism_Internal", 2D) = "white" {}
         [PerRendererData] cubism_MaskTile("cubism_Internal", Vector) = (0, 0, 0, 0)
         [PerRendererData] cubism_MaskTransform("cubism_Internal", Vector) = (0, 0, 0, 0)
+
+        _TexelX("Texel X", Float) = 0
+        _TexelY("Texel Y", Float) = 0
     }
     SubShader
     {
@@ -52,7 +55,6 @@
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
-
             struct v2f
             {
                 float4 vertex   : SV_POSITION;
@@ -63,11 +65,9 @@
                 CUBISM_VERTEX_OUTPUT
             };
 
-
             sampler2D _MainTex;
 
             CUBISM_SHADER_VARIABLES
-
 
             v2f vert (appdata IN)
             {
@@ -84,6 +84,8 @@
                 return OUT;
             }
 
+            float _TexelX;
+            float _TexelY;
 
             fixed4 frag (v2f IN) : SV_Target
             {
