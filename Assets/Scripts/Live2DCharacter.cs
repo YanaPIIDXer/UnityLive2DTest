@@ -33,6 +33,12 @@ public class Live2DCharacter : MonoBehaviour
     private CubismModel Model = null;
 
     /// <summary>
+    /// カスタム用Material
+    /// </summary>
+    [SerializeField]
+    private Material CustomMaterial = null;
+
+    /// <summary>
     /// セットアップ
     /// </summary>
     /// <param name="InputEvents">入力イベントインタフェース</param>
@@ -41,7 +47,7 @@ public class Live2DCharacter : MonoBehaviour
     {
         Model = GetComponent<CubismModel>();
         CollectParameters();
-        CollectTransforms();
+        SetupTransformss();
 
         var Blink = new ActionBlink(Parameters["ParamEyeLOpen"], Parameters["ParamEyeROpen"]);
         var Breath = new ActionBreath(Parameters["ParamBreath"]);
@@ -167,9 +173,9 @@ public class Live2DCharacter : MonoBehaviour
     }
 
     /// <summary>
-    /// Transform収集
+    /// Transformのセットアップ
     /// </summary>
-    private void CollectTransforms()
+    private void SetupTransformss()
     {
         var RootTransform = transform.Find("Drawables");
         Transforms.Add("Root", RootTransform);
@@ -177,6 +183,8 @@ public class Live2DCharacter : MonoBehaviour
         {
             var Trans = RootTransform.GetChild(i);
             Transforms.Add(Trans.gameObject.name, Trans);
+
+            Trans.GetComponent<MeshRenderer>().material = CustomMaterial;
         }
     }
 }

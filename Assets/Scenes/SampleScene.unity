@@ -5527,6 +5527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11c7c152374c28040ad71c1bfce067fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CustomMaterial: {fileID: 2100000, guid: 08fd1326a7317f5438f9e5e7f7b71c31, type: 2}
 --- !u!43 &557371797
 Mesh:
   m_ObjectHideFlags: 0
