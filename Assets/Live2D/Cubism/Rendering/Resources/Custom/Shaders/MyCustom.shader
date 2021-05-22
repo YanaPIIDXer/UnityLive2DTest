@@ -20,6 +20,8 @@
 
         _TexelX("Texel X", Float) = 0
         _TexelY("Texel Y", Float) = 0
+
+        _BlendColor("Blend Color", Vector) = (1, 1, 1, 1)
     }
     SubShader
     {
@@ -86,10 +88,12 @@
 
             float _TexelX;
             float _TexelY;
+            float4 _BlendColor;
 
             fixed4 frag (v2f IN) : SV_Target
             {
                 fixed4 OUT = tex2D(_MainTex, IN.texcoord) * IN.color;
+                OUT.rgb *= _BlendColor.rgb;
                 CUBISM_APPLY_ALPHA(IN, OUT);
                 return OUT;
             }
