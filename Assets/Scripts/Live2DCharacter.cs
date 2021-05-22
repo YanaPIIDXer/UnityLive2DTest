@@ -128,6 +128,11 @@ public class Live2DCharacter : MonoBehaviour
             .Subscribe((_) => Blink.IsActive = true)
             .AddTo(gameObject);
 
+        var OddEye = new ActionOddEye(Transforms["D_EYE_BALL_01"].GetComponent<MeshRenderer>().material);
+        InputEvents.OddEye
+            .Subscribe((_) => OddEye.IsActive = !OddEye.IsActive)
+            .AddTo(gameObject);
+
         AddAction(Blink);
         AddAction(Breath);
         AddAction(LipSync);
@@ -139,6 +144,7 @@ public class Live2DCharacter : MonoBehaviour
         AddAction(Wink);
         AddAction(Getdown);
         AddAction(Smile);
+        AddAction(OddEye);
     }
 
     void LateUpdate()

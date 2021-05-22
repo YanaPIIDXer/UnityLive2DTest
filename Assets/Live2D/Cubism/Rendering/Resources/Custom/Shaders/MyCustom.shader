@@ -21,7 +21,7 @@
         _TexelX("Texel X", Float) = 0
         _TexelY("Texel Y", Float) = 0
 
-        _BlendColor("Blend Color", Vector) = (1, 1, 1, 1)
+        _BlendColor("Blend Color", Color) = (1, 1, 1, 1)
     }
     SubShader
     {

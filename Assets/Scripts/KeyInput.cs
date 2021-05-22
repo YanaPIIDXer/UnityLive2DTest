@@ -25,6 +25,11 @@ public interface IKeyInput
     /// </summary>
     /// <value></value>
     IObservable<Unit> Smile { get; }
+
+    /// <summary>
+    /// オッドアイ化
+    /// </summary>
+    IObservable<Unit> OddEye { get; }
 }
 
 /// <summary>
@@ -51,5 +56,12 @@ public class KeyInput : MonoBehaviour, IKeyInput
     /// </summary>
     public IObservable<Unit> Smile => Observable.EveryUpdate()
                                         .Where((_) => Input.GetKeyDown(KeyCode.S))
+                                        .Select((_) => Unit.Default);
+
+    /// <summary>
+    /// オッドアイ化
+    /// </summary>
+    public IObservable<Unit> OddEye => Observable.EveryUpdate()
+                                        .Where((_) => Input.GetKeyDown(KeyCode.O))
                                         .Select((_) => Unit.Default);
 }
